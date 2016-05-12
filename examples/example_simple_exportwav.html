@@ -65,12 +65,13 @@
   }
 
   function createDownloadLink() {
+    alert('hi')
     recorder && recorder.exportWAV(function(blob) {
       var url = URL.createObjectURL(blob);
       var li = document.createElement('li');
       var au = document.createElement('audio');
       var hf = document.createElement('a');
-      
+      alert("hi")
       au.controls = true;
       au.src = url;
       hf.href = url;
@@ -86,17 +87,17 @@
     try {
       // webkit shim
       window.AudioContext = window.AudioContext || window.webkitAudioContext;
-      navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia;
+      navigator.MediaDevices.getUserMedia() = navigator.MediaDevices.getUserMedia() || navigator.MediaDevices.webkitGetUserMedia;
       window.URL = window.URL || window.webkitURL;
       
       audio_context = new AudioContext;
       __log('Audio context set up.');
-      __log('navigator.getUserMedia ' + (navigator.getUserMedia ? 'available.' : 'not present!'));
+      __log('navigator.MediaDevices.getUserMedia() ' + (navigator.MediaDevices.getUserMedia() ? 'available.' : 'not present!'));
     } catch (e) {
       alert('No web audio support in this browser!');
     }
     
-    navigator.getUserMedia({audio: true}, startUserMedia, function(e) {
+    navigator.MediaDevices.getUserMedia()({audio: true}, startUserMedia, function(e) {
       __log('No live audio input: ' + e);
     });
   };
